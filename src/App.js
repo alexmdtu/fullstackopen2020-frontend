@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Note from './components/Note'
 import Notification from './components/Notification'
 import noteService from './services/notes'
+import loginService from './services/login'
 
 const Footer = () => {
     const footerStyle = {
@@ -25,6 +26,7 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState('some error happened...')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [user, setUser] = useState(null)
 
 
     useEffect(() => {
@@ -81,7 +83,20 @@ const App = () => {
 
     const handleLogin = (event) => {
         event.preventDefault()
-        console.log('logging in with', username, password)
+        try {
+            const user = await loginService.login({
+                username, password
+            })
+
+            setUser(user)
+            setUsername('')
+            setPassword('')
+        } catch {
+            setErrorMessage('Wrong Credentials')
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 5000)
+        }
     }
 
     return (
