@@ -141,7 +141,10 @@ const App = () => {
 
             {user === null ?
                 loginForm() :
-                noteForm()
+                <div>
+                    <p>{user.name} logged-in</p>
+                    {noteForm()}
+                </div>
             }
 
             <div>
