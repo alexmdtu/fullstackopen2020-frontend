@@ -81,7 +81,7 @@ const App = () => {
         ? notes
         : notes.filter(note => note.important)
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault()
         try {
             const user = await loginService.login({
@@ -99,11 +99,11 @@ const App = () => {
         }
     }
 
-    const loginForm = () => {
+    const loginForm = () => (
         <form onSubmit={handleLogin}>
             <div>
                 username
-                    <input
+          <input
                     type="text"
                     value={username}
                     name="Username"
@@ -112,7 +112,7 @@ const App = () => {
             </div>
             <div>
                 password
-                    <input
+          <input
                     type="password"
                     value={password}
                     name="Password"
@@ -121,9 +121,9 @@ const App = () => {
             </div>
             <button type="submit">login</button>
         </form>
-    }
+    )
 
-    const noteForm = () => {
+    const noteForm = () => (
         <form onSubmit={addNote}>
             <input
                 value={newNote}
@@ -131,7 +131,7 @@ const App = () => {
             />
             <button type="submit">save</button>
         </form>
-    }
+    )
 
     return (
         <div>
