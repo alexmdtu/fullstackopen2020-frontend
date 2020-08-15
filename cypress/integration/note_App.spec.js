@@ -30,7 +30,7 @@ describe('Note app', function () {
         cy.contains('Alex logged in')
     })
 
-    it.only('login fails with wrong password', function () {
+    it('login fails with wrong password', function () {
         cy.contains('login').click()
         cy.get('#username').type('atu')
         cy.get('#password').type('wrong')
@@ -46,10 +46,12 @@ describe('Note app', function () {
 
     describe('when logged in', function () {
         beforeEach(function () {
-            cy.contains('login').click()
-            cy.get('#username').type('atu')
-            cy.get('#password').type('secret')
-            cy.get('#login-button').click()
+            cy.request('POST', 'http://localhost:3001/api/login', {
+                username: 'atu', password: 'secret'
+            }).then(response => {
+                localStorage.setItem('loggedNoteappUser', JSON.stringify(response.body))
+                cy.visit('http://localhost:3000')
+            })
         })
 
         it('a new note can be created', function () {
